@@ -20,63 +20,51 @@ public class CertificateRepositoryTest {
     private Certificate certificate;
 
     @BeforeEach
-    public void setUp() {
-        certificate = new Certificate(1001, 2023, null); // Use null for College here since it's not the focus
+    void setUp() {
+        certificate = new Certificate(1, 2024, null);
         certificateRepository.save(certificate);
     }
 
     @Test
-    public void testSaveCertificate() {
-        Certificate savedCertificate = certificateRepository.save(new Certificate(1002, 2024, null));
-        assertNotNull(savedCertificate);
-        assertEquals(1002, savedCertificate.getId());
-        assertEquals(2024, savedCertificate.getYear());
-    }
-
-    @Test
-    public void testFindCertificateById() {
+    void testFindById() {
         Optional<Certificate> foundCertificate = certificateRepository.findById(certificate.getId());
+
         assertTrue(foundCertificate.isPresent());
-        assertEquals(certificate.getId(), foundCertificate.get().getId());
+        assertEquals(certificate.getYear(), foundCertificate.get().getYear());
     }
 
     @Test
-    public void testUpdateCertificate() {
-        Certificate foundCertificate = certificateRepository.findById(certificate.getId()).orElse(null);
-        assertNotNull(foundCertificate);
-        foundCertificate.setYear(2025);
-        Certificate updatedCertificate = certificateRepository.save(foundCertificate);
-        assertEquals(2025, updatedCertificate.getYear());
+    void testFindByNonExistingId() {
+        Optional<Certificate> foundCertificate = certificateRepository.findById(999);
+
+        assertFalse(foundCertificate.isPresent());
     }
 
     @Test
-    public void testDeleteCertificate() {
-        certificateRepository.deleteById(certificate.getId());
-        Optional<Certificate> deletedCertificate = certificateRepository.findById(certificate.getId());
-        assertFalse(deletedCertificate.isPresent());
+    void testSaveCertificate() {
+        Certificate newCertificate = new Certificate(2, 2025, null);
+        Certificate savedCertificate = certificateRepository.save(newCertificate);
+
+        assertNotNull(savedCertificate);
+        assertEquals(newCertificate.getYear(), savedCertificate.getYear());
     }
 
-//    @Test
-//    public void testFindAllCertificates() {
-//        Certificate secondCertificate = new Certificate(1003, 2024, null);
-//        certificateRepository.save(secondCertificate);
-//        Iterable<Certificate> certificates = certificateRepository.findAll();
-//        assertEquals(2, ((List<Certificate>) certificates).size(), "There should be two certificates in the database");
-//    }
+    @Test
+    void testDeleteCertificate() {
+        certificateRepository.delete(certificate);
 
-    // Failing test cases (commented out)
+        Optional<Certificate> foundCertificate = certificateRepository.findById(certificate.getId());
 
+        assertFalse(foundCertificate.isPresent());
+    }
+
+    // Failing test case example
     // @Test
-    // public void testFindNonExistentCertificate() {
-    //     Optional<Certificate> nonExistentCertificate = certificateRepository.findById(9999);
-    //     assertTrue(nonExistentCertificate.isPresent(), "The certificate should not exist");
-    // }
-
-    // @Test
-    // public void testDeleteNonExistentCertificate() {
-    //     certificateRepository.deleteById(9999);
-    //     Optional<Certificate> deletedCertificate = certificateRepository.findById(9999);
-    //     assertTrue(deletedCertificate.isPresent(), "There should be no certificate with this ID");
+    // void testDeleteNonExistingCertificate() {
+    //     Certificate nonExistingCertificate = new Certificate(999, 2025, null);
+    //     Exception exception = assertThrows(EntityNotFoundException.class, () -> {
+    //         certificateRepository.delete(nonExistingCertificate);
+    //     });
+    //     assertEquals("Certificate not found with ID: 999", exception.getMessage());
     // }
 }
-

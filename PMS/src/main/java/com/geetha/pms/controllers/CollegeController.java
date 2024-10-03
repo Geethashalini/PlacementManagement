@@ -20,18 +20,35 @@ public class CollegeController {
     @Autowired
     private CollegeService collegeService;
 
+    /**
+     * Retrieves a list of all colleges.
+     *
+     * @return a ResponseEntity containing a list of colleges and HTTP status OK
+     */
     @GetMapping
     public ResponseEntity<List<College>> getAllColleges() {
         List<College> colleges = collegeService.listAll();
         return new ResponseEntity<>(colleges, HttpStatus.OK);
     }
 
+    /**
+     * Adds a new college.
+     *
+     * @param college the college to be added
+     * @return a ResponseEntity containing a success message and HTTP status CREATED
+     */
     @PostMapping
     public ResponseEntity<String> addCollege(@RequestBody College college) {
         collegeService.save(college);
         return new ResponseEntity<>("College added successfully", HttpStatus.CREATED);
     }
 
+    /**
+     * Retrieves a college by its ID.
+     *
+     * @param id the ID of the college to be retrieved
+     * @return a ResponseEntity containing the college and HTTP status OK, or HTTP status NOT FOUND if not found
+     */
     @GetMapping("/{id}")
     public ResponseEntity<College> getCollege(@PathVariable Integer id) {
         try {
@@ -42,6 +59,13 @@ public class CollegeController {
         }
     }
 
+    /**
+     * Updates an existing college.
+     *
+     * @param college the college with updated information
+     * @param id      the ID of the college to be updated
+     * @return a ResponseEntity containing a success message and HTTP status OK, or HTTP status NOT FOUND if not found
+     */
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCollege(@RequestBody College college, @PathVariable Integer id) {
         try {
@@ -54,6 +78,12 @@ public class CollegeController {
         }
     }
 
+    /**
+     * Deletes a college by its ID.
+     *
+     * @param id the ID of the college to be deleted
+     * @return a ResponseEntity containing a success message and HTTP status OK, or HTTP status NOT FOUND if not found
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCollege(@PathVariable Integer id) {
         try {
