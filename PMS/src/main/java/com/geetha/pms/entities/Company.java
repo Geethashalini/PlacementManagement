@@ -7,6 +7,8 @@ import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  * Entity class representing a Company.
  */
@@ -20,6 +22,7 @@ public class Company {
     private Float salary;
 
     @OneToMany(mappedBy = "company")
+    @JsonBackReference // Breaks circular reference during serialization
     private Set<Student> placedStudents = new HashSet<>();  // Use Set to avoid duplicate entries
 
     /**

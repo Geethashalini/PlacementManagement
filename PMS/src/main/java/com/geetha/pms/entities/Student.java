@@ -5,6 +5,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Entity class representing a Student.
  */
@@ -12,9 +15,7 @@ import jakarta.persistence.Table;
 @Table(name = "student")
 public class Student {
 
-    
-
-	@Id
+    @Id
     private int id;
     private String name;
     private Long roll;
@@ -24,33 +25,22 @@ public class Student {
     private Long hallTicketNo;
 
     @ManyToOne
+    @JsonBackReference // Break circular reference with College entity
     private College college;
 
     @ManyToOne
     private Certificate certificate;
     
     @ManyToOne
+    @JsonManagedReference // Ensures proper serialization between Student and Company
     private Company company;
 
-
-    /**
-     * Default constructor.
-     */
+    // Default constructor
     public Student() {
         super();
     }
 
-    /**
-     * Parameterized constructor.
-     *
-     * @param id           the student ID
-     * @param name         the student name
-     * @param roll         the roll number
-     * @param qualification the qualification
-     * @param course       the course of study
-     * @param year         the year of study
-     * @param hallTicketNo the hall ticket number
-     */
+    // Parameterized constructor
     public Student(int id, String name, Long roll, String qualification, String course, int year, Long hallTicketNo) {
         this.id = id;
         this.name = name;
@@ -62,93 +52,90 @@ public class Student {
     }
 
     // Getters and Setters
+    public int getId() {
+        return id;
+    }
 
-   
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Long getRoll() {
+        return roll;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setRoll(Long roll) {
+        this.roll = roll;
+    }
 
-	public Long getRoll() {
-		return roll;
-	}
+    public String getQualification() {
+        return qualification;
+    }
 
-	public void setRoll(Long roll) {
-		this.roll = roll;
-	}
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
 
-	public String getQualification() {
-		return qualification;
-	}
+    public String getCourse() {
+        return course;
+    }
 
-	public void setQualification(String qualification) {
-		this.qualification = qualification;
-	}
+    public void setCourse(String course) {
+        this.course = course;
+    }
 
-	public String getCourse() {
-		return course;
-	}
+    public int getYear() {
+        return year;
+    }
 
-	public void setCourse(String course) {
-		this.course = course;
-	}
+    public void setYear(int year) {
+        this.year = year;
+    }
 
-	public int getYear() {
-		return year;
-	}
+    public Long getHallTicketNo() {
+        return hallTicketNo;
+    }
 
-	public void setYear(int year) {
-		this.year = year;
-	}
+    public void setHallTicketNo(Long hallTicketNo) {
+        this.hallTicketNo = hallTicketNo;
+    }
 
-	public Long getHallTicketNo() {
-		return hallTicketNo;
-	}
+    public College getCollege() {
+        return college;
+    }
 
-	public void setHallTicketNo(Long hallTicketNo) {
-		this.hallTicketNo = hallTicketNo;
-	}
+    public void setCollege(College college) {
+        this.college = college;
+    }
 
-	public College getCollege() {
-		return college;
-	}
+    public Certificate getCertificate() {
+        return certificate;
+    }
 
-	public void setCollege(College college) {
-		this.college = college;
-	}
+    public void setCertificate(Certificate certificate) {
+        this.certificate = certificate;
+    }
 
-	public Certificate getCertificate() {
-		return certificate;
-	}
+    public Company getCompany() {
+        return company;
+    }
 
-	public void setCertificate(Certificate certificate) {
-		this.certificate = certificate;
-	}
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-	 @Override
-		public String toString() {
-			return "Student [id=" + id + ", name=" + name + ", roll=" + roll + ", qualification=" + qualification
-					+ ", course=" + course + ", year=" + year + ", hallTicketNo=" + hallTicketNo + ", college=" + college
-					+ ", certificate=" + certificate + "]";
-		}
+    @Override
+    public String toString() {
+        return "Student [id=" + id + ", name=" + name + ", roll=" + roll + ", qualification=" + qualification
+                + ", course=" + course + ", year=" + year + ", hallTicketNo=" + hallTicketNo + ", college=" + college
+                + ", certificate=" + certificate + "]";
+    }
 }
-

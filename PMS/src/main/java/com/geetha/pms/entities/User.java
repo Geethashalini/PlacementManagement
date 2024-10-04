@@ -1,12 +1,12 @@
 package com.geetha.pms.entities;
 
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Entity class representing a User.
@@ -22,23 +22,15 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "collegeAdmin")
+    @JsonIgnore // Ignore this field in the JSON output to prevent circular reference
     private List<College> colleges;
 
-    /**
-     * Default constructor.
-     */
+    // Default constructor
     public User() {
         super();
     }
 
-    /**
-     * Parameterized constructor.
-     *
-     * @param id       the user ID
-     * @param name     the user name
-     * @param type     the user type (e.g., admin, student)
-     * @param password the user's password
-     */
+    // Parameterized constructor
     public User(Long id, String name, String type, String password) {
         this.id = id;
         this.name = name;
@@ -88,11 +80,6 @@ public class User {
         this.colleges = colleges;
     }
 
-    /**
-     * Returns a string representation of the User.
-     *
-     * @return a string representing the User
-     */
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", type=" + type + ", password=" + password + "]";
