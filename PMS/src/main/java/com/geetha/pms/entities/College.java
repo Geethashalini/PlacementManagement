@@ -24,12 +24,12 @@ public class College {
     private String location;
 
     @OneToMany(mappedBy = "college")
-    @JsonManagedReference // This prevents recursive serialization of students in College
+   //@JsonManagedReference // This prevents recursive serialization of students in College
     private List<Student> students;
 
     @ManyToOne
     @JoinColumn(name = "college_admin_id")
-    @JsonBackReference // This prevents recursive serialization of colleges in User (collegeAdmin)
+    //@JsonBackReference // This prevents recursive serialization of colleges in User (collegeAdmin)
     private User collegeAdmin;
 
     // Default constructor

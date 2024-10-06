@@ -37,7 +37,8 @@ public class CollegeController {
      * @param college the college to be added
      * @return a ResponseEntity containing a success message and HTTP status CREATED
      */
-    @PostMapping
+    //@PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> addCollege(@RequestBody College college) {
         collegeService.save(college);
         return new ResponseEntity<>("College added successfully", HttpStatus.CREATED);
@@ -66,8 +67,11 @@ public class CollegeController {
      * @param id      the ID of the college to be updated
      * @return a ResponseEntity containing a success message and HTTP status OK, or HTTP status NOT FOUND if not found
      */
-    @PutMapping("/{id}")
+    //@PutMapping("/{id}")
+    //@PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> updateCollege(@RequestBody College college, @PathVariable Integer id) {
+        System.out.println("Received request to update college: " + college);
         try {
             College existingCollege = collegeService.get(id);
             college.setId(id);
@@ -77,6 +81,7 @@ public class CollegeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
 
     /**
      * Deletes a college by its ID.

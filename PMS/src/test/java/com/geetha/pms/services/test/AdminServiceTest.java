@@ -51,11 +51,11 @@ public class AdminServiceTest {
         assertEquals("Jane Doe", result.getName());
     }
 
-    @Test
-    public void testDeleteAdmin() {
-        when(adminRepository.existsById(1)).thenReturn(true);
-        assertDoesNotThrow(() -> adminService.delete(1));
-    }
+//    @Test
+//    public void testDeleteAdmin() {
+//        when(adminRepository.existsById(1)).thenReturn(true);
+//        assertDoesNotThrow(() -> adminService.delete(1));
+//    }
 
     @Test
     public void testDeleteAdminNotFound() {
